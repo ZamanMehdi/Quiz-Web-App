@@ -72,7 +72,7 @@ export default function App() {
   const [disableButton, setdisabledButton] = React.useState(false)
   const [selectOption, setselectOption] = React.useState('');
   const [result, setresult] = React.useState('');
-  
+
   React.useEffect(() => setqProgressBar(Math.floor((counter / Questions.length) * 100)));
 
   const ratingValue = difficulty => {
@@ -144,67 +144,67 @@ export default function App() {
   }
 
   return (
-      <div style={{ backgroundColor: 'rgb(237, 237, 237)', height: '100vh' }}>
-        <Card className={classes.card}>
-          <div className={classes.progressBar} style={{ width: qProgressBar + '%' }} />
-          {Questions.map((question, index) => {
-            if (index + 1 === counter)
-              return (
-                <div className={classes.formDiv}>
-                  <div className={classes.questionCoutner}>
-                    Question {counter} of {Questions.length}
-                  </div>
-                  <div className={classes.entertainTitle}>
-                    {decodeURIComponent(question.category)}
-                  </div>
-                  <Rating defaultValue={() => ratingValue(question.difficulty)} max={3} style={{ color: 'rgb(0,0,0)', marginBottom: 40 }} readOnly />
-                  <div className={classes.question}>
-                    {decodeURIComponent(question.question)}
-                  </div>
-                  {
-                    <Grid container spacing={3} style={{ marginTop: 20 }}>
-                      {options.map(op => {
-                        return (
-                          <Grid item xs={12} md={6} style={{ marginTop: 20, textAlign: 'center', padding: '0xp 20px' }}>
-                            <button style={selectOption === op ? {
-                              backgroundColor: 'Black',
-                              color: 'white'
-                            }
-                              :
-                              op === question.correct_answer && disableButton ? {
-                                backgroundColor: 'white',
-                                color: 'black'
-                              }
-                                : null
-                            } disabled={disableButton} className={classes.button} onClick={() => checkAns(op, question.correct_answer)}>{decodeURIComponent(op)}</button>
-                          </Grid>
-                        )
-                      })}
-                    </Grid>
-                  }
+    <div style={{ backgroundColor: 'rgb(237, 237, 237)', height: '100vh' }}>
+      <Card className={classes.card}>
+        <div className={classes.progressBar} style={{ width: qProgressBar + '%' }} />
+        {Questions.map((question, index) => {
+          if (index + 1 === counter)
+            return (
+              <div className={classes.formDiv}>
+                <div className={classes.questionCoutner}>
+                  Question {counter} of {Questions.length}
                 </div>
-              )
-          })}
-          {disableButton &&
-            <div style={{ textAlign: 'center', width: '45%', margin: '0 auto' }}>
-              <span className={classes.questionCoutner}>
-                {result}
-              </span>
-              <button className={classes.button} style={{ marginTop: 20, lineHeight: '45px' }} onClick={nextQuestion}>Next Question</button>
-            </div>
-          }
-          <div className={classes.ScoreDiv} style={{marginTop: disableButton?'calc(11vw)':'calc(20vw)'}}>
-            <span>Score: {currentScore ? currentScore : 0}%</span>
-            <span style={{float: 'right'}}>Max Score: {correctMaxScore}%</span>
-            <div className={classes.bottomProgressBar}
-              style={{ display: 'flex' }}
-            >
-              <div style={{ width: correctScore + '%', height: 40, backgroundColor: 'rgb(0,0,0)' }} />
-              <div style={{ width: currentScore - correctScore + '%', height: 40, backgroundColor: 'rgb(113, 113, 113)' }} />
-              <div style={{ width: correctMaxScore - currentScore + '%', height: 40, backgroundColor: 'rgb(210, 210, 210)' }} />
-            </div>
+                <div className={classes.entertainTitle}>
+                  {decodeURIComponent(question.category)}
+                </div>
+                <Rating defaultValue={() => ratingValue(question.difficulty)} max={3} style={{ color: 'rgb(0,0,0)', marginBottom: 40 }} readOnly />
+                <div className={classes.question}>
+                  {decodeURIComponent(question.question)}
+                </div>
+                {
+                  <Grid container spacing={3} style={{ marginTop: 20 }}>
+                    {options.map(op => {
+                      return (
+                        <Grid item xs={12} md={6} style={{ marginTop: 20, textAlign: 'center', padding: '0xp 20px' }}>
+                          <button style={selectOption === op ? {
+                            backgroundColor: 'Black',
+                            color: 'white'
+                          }
+                            :
+                            op === question.correct_answer && disableButton ? {
+                              backgroundColor: 'white',
+                              color: 'black'
+                            }
+                              : null
+                          } disabled={disableButton} className={classes.button} onClick={() => checkAns(op, question.correct_answer)}>{decodeURIComponent(op)}</button>
+                        </Grid>
+                      )
+                    })}
+                  </Grid>
+                }
+              </div>
+            )
+        })}
+        {disableButton &&
+          <div style={{ textAlign: 'center', width: '45%', margin: '0 auto' }}>
+            <span className={classes.questionCoutner}>
+              {result}
+            </span>
+            <button className={classes.button} style={{ marginTop: 20, lineHeight: '45px' }} onClick={nextQuestion}>Next Question</button>
           </div>
-        </Card>
-      </div >
+        }
+        <div className={classes.ScoreDiv} style={{ marginTop: disableButton ? 'calc(0vw)' : 'calc(10vw)' }}>
+          <span>Score: {currentScore ? currentScore : 0}%</span>
+          <span style={{ float: 'right' }}>Max Score: {correctMaxScore}%</span>
+          <div className={classes.bottomProgressBar}
+            style={{ display: 'flex' }}
+          >
+            <div style={{ width: correctScore + '%', height: 40, backgroundColor: 'rgb(0,0,0)', borderRadius: '5px 0px 0px 5px' }} />
+            <div style={{ width: currentScore - correctScore + '%', height: 40, backgroundColor: 'rgb(113, 113, 113)', borderRadius: currentScore <= 95 ? 0 : '0px 5px 5px 0px' }} />
+            <div style={{ width: correctMaxScore - currentScore + '%', height: 40, backgroundColor: 'rgb(210, 210, 210)', borderRadius: correctMaxScore !== 100 ? 0 : 5 }} />
+          </div>
+        </div>
+      </Card>
+    </div >
   );
 }
